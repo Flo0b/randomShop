@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-md-12">
+        <figure class="card card-product">
+            <div class="img-wrap"><img class="img-fluid" src="{{product.image}}"></div>
+            <figcaption class="info-wrap">
+                    <h4 class="title">{{product.name}}</h4>
+                    <p class="desc">Some small description goes here</p>
+                    <div class="rating-wrap">
+                        <div class="label-rating">132 reviews</div>
+                        <div class="label-rating">154 orders </div>
+                    </div> <!-- rating-wrap.// -->
+            </figcaption>
+            <div class="bottom-wrap">
+                    <a href="" class="btn btn-sm btn-primary float-right">Order</a>	
+                    <div class="price-wrap h5">
+                        <span class="price-new">${{product.price}}</span> <del class="price-old">${{product.discountedPrice}}</del>
+                    </div> <!-- price-wrap.// -->
+            </div> <!-- bottom-wrap.// -->
+        </figure>
+    </div> <!-- col // -->
+</div>
+{% endblock %}

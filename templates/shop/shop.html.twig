@@ -1,0 +1,40 @@
+  {% extends "base.html.twig" %} 
+  {% block body %}
+        <h1>WELCOME TO SHOP</H1>  
+        <div class="container">
+
+
+
+
+
+<div class="row">
+{% for product in products %}
+<div class="col-md-4">
+	<figure class="card card-product">
+		<div class="img-wrap"><img class="img-fluid" src={{product.image}}></div>
+		<figcaption class="info-wrap">
+				<a href="{{path('shop_show', {'id':product.id})}}"><h4 class="title">{{product.name}}</h4></a>
+				<p class="desc">Some small description goes here</p>
+				<div class="rating-wrap">
+					<div class="label-rating">132 reviews</div>
+					<div class="label-rating">154 orders </div>
+				</div> <!-- rating-wrap.// -->
+		</figcaption>
+		<div class="bottom-wrap">	
+            <a href="{{path('shop_show', {'id':product.id})}}" class="btn btn-sm btn-primary float-right">Details</a>		
+			<div class="price-wrap h5">
+				<span class="price-new">${{product.price}}</span> <del class="price-old">${{product.discountedPrice}}</del>
+			</div> <!-- price-wrap.// -->
+		</div> <!-- bottom-wrap.// -->
+	</figure>
+</div> <!-- col // -->
+
+{% endfor %}
+</div> <!-- row.// -->
+
+
+
+</div> 
+<!--container.//-->
+
+  {% endblock %}
