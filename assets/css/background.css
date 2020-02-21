@@ -1,0 +1,7 @@
+
+body {
+    background-image: url("https://source.unsplash.com/random/1920x1080/?product");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+}

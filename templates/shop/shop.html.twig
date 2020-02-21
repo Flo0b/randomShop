@@ -1,12 +1,6 @@
   {% extends "base.html.twig" %} 
   {% block body %}
-        <h1>WELCOME TO SHOP</H1>  
-        <div class="container">
-
-
-
-
-
+<div class="container margin-container" >
 <div class="row">
 {% for product in products %}
 <div class="col-md-4">
@@ -15,10 +9,6 @@
 		<figcaption class="info-wrap">
 				<a href="{{path('shop_show', {'id':product.id})}}"><h4 class="title">{{product.name}}</h4></a>
 				<p class="desc">Some small description goes here</p>
-				<div class="rating-wrap">
-					<div class="label-rating">132 reviews</div>
-					<div class="label-rating">154 orders </div>
-				</div> <!-- rating-wrap.// -->
 		</figcaption>
 		<div class="bottom-wrap">	
             <a href="{{path('shop_show', {'id':product.id})}}" class="btn btn-sm btn-primary float-right">Details</a>		
@@ -37,4 +27,4 @@
 </div> 
 <!--container.//-->
 
-  {% endblock %}
+{% endblock %}
