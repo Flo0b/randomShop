@@ -1,16 +1,15 @@
-  {% extends "base.html.twig" %} 
+{% extends "base.html.twig" %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('background') }}
+	<div id="bg"></div>
+	<div class="bg-text">
+		<h1>I am Florian B</h1>
+		<p>Welcome to my Random Shop</p>
+    <p class="small font-weight-light tiny">Just refresh the page to change the product background</p>
+	</div>
+	{{ parent() }}
+	{{ encore_entry_link_tags('background') }}
 {% endblock %}
 
 
-{% block body %}
-
-
-
-
-
-
-{% endblock %}
+{% block body %}{% endblock %}

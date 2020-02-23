@@ -1,5 +1,49 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<h1>Création d'un article</h1>
-{% endblock %}
+	<div class="container margin-container">
+		<h1>Add a product</h1>
+		{{form_start(formProduct)}}
+
+		<div class="form-group">
+			<label for="name">Name</label>
+			{{ form_widget(formProduct.name)}}
+		</div>
+		<div class="form-group">
+			<label for="description">Description</label>
+			{{ form_widget(formProduct.description)}}
+		</div>
+
+		<div class="form-group">
+			<label for="image">Image</label>
+			{{ form_widget(formProduct.image)}}
+		</div>
+
+		<div class="form-group">
+			<label for="price">Price</label>
+			{{ form_widget(formProduct.price)}}
+		</div>
+
+		<div class="form-group">
+			<label for="discountedPrice">Discounted price</label>
+			{{ form_widget(formProduct.discountedPrice)}}
+		</div>
+
+		<div class="form-group">
+			<label for="type">Type</label>
+			{{ form_widget(formProduct.type)}}
+		</div>
+		{{form_end(formProduct)}}
+
+
+		<div id='app'>
+			{% verbatim %}
+				<p>{{ message }}</p>
+				<p>
+				{% endverbatim %}
+				<input v-model="message">
+			</div>
+		</div>
+
+
+	{% endblock %}

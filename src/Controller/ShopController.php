@@ -1,13 +1,14 @@
 <?php
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Products;
 use App\Repository\ProductsRepository;
-
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 
 class ShopController extends AbstractController
@@ -22,7 +23,7 @@ class ShopController extends AbstractController
 
         return $this->render('shop/shop.html.twig', [
             'controller_name' => 'ShopController',
-            'products'=> $products
+            'products' => $products,
         ]);
     }
 
@@ -36,16 +37,57 @@ class ShopController extends AbstractController
         ]);
     }
 
-
-
     /**
      * @Route("/shop/new", name="shop_create_product")
      */
     public function createProduct(Request $request)
     {
         dump($request);
+
+        $product = new Products();
+
+        $form = $this->createFormBuilder($product)
+            ->add('name', TextType::class, [
+                'attr' => [
+                    'placeholder' => "Product name",
+                    'class' => "form-control"
+                ]
+            ])
+            ->add('image', TextType::class, [
+                'attr' => [
+                    'placeholder' => "Image url",
+                    'class' => "form-control"
+                ]
+            ])
+            ->add('price', TextType::class, [
+                'attr' => [
+                    'placeholder' => "Product price",
+                    'class' => "form-control"
+                ]
+            ])
+            ->add('discountedPrice', TextType::class, [
+                'attr' => [
+                    'placeholder' => "Product discounted price",
+                    'class' => "form-control"
+                ]
+            ])
+            ->add('description', TextareaType::class, [
+                'attr' => [
+                    'placeholder' => "Product description",
+                    'class' => "form-control"
+                ]
+            ])
+            ->add('type', TextType::class, [
+                'attr' => [
+                    'placeholder' => "Product type",
+                    'class' => "form-control"
+                ]
+            ])
+            ->getForm();
+
         return $this->render('shop/createproduct.html.twig', [
             'controller_name' => 'ShopController',
+            'formProduct' => $form->createView()
         ]);
     }
 
@@ -56,10 +98,8 @@ class ShopController extends AbstractController
     {
         return $this->render('shop/show.html.twig', [
             'controller_name' => 'ShopController',
-            'product' => $product
+            'product' => $product,
         ]);
     }
-
-
 
 }

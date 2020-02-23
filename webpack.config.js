@@ -27,6 +27,11 @@ Encore
     .addEntry('background', './assets/js/background.js')
     //.addEntry('page2', './assets/js/page2.js')
 
+    //VueJS
+    .enableVueLoader(() => {}, {
+             useJsx: true
+    })
+
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 

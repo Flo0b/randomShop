@@ -4,26 +4,37 @@
  * We recommend including the built version of this JavaScript file
  * (and its CSS file) in your base layout (base.html.twig).
  */
-require('bootstrap');
-
+require("bootstrap");
 
 // any CSS you import will output into a single css file (app.css in this case)
-import '../css/app.css';
+import "../css/app.css";
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
-import $ from 'jquery';
+import $ from "jquery";
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+import Vue from "vue";
 
-$(function () {
-    console.log("test");
+console.log("Hello Webpack Encore! Edit me in assets/js/app.js");
 
-    $(window).on('scroll', function () {
-        console.log("scrooooollll");
-        if ( $(window).scrollTop() > 10 ) {
-            $('.navbar').addClass('active');
-        } else {
-            $('.navbar').removeClass('active');
-        }
-    });
+window.onload = $(function() {
+  console.log("test");
+
+  $(window).on("scroll", function() {
+    console.log("scrooooollll");
+    if ($(window).scrollTop() > 10) {
+      $(".navbar").addClass("active");
+    } else {
+      $(".navbar").removeClass("active");
+    }
+  });
+
+  //Vue
+  var app = new Vue({
+    el: "#app",
+    data: {
+      message: "Hello Vue!"
+    }
+  });
+
+
 });
