@@ -350,6 +350,7 @@ link-white:visited {
 body {
   /* min-height: 100vh; */
   background-color: #34495e;
+  /* background: linear-gradient(30deg, black, #34495e); */
 }
 
 .margin-container {

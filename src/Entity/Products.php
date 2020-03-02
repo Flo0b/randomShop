@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductsRepository")
@@ -18,6 +21,12 @@ class Products
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "Your name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your name cannot be longer than {{ limit }} characters"
+     * )
      */
     private $name;
 
@@ -38,6 +47,9 @@ class Products
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url(
+     *    message = "The url '{{ value }}' is not a valid url",
+     * )
      */
     private $image;
 
@@ -45,6 +57,16 @@ class Products
      * @ORM\Column(type="text", length=65535, nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\DiscountRules", mappedBy="products")
+     */
+    private $discountRules;
+
+    public function __construct()
+    {
+        $this->discountRules = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +141,34 @@ class Products
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DiscountRules[]
+     */
+    public function getDiscountRules(): Collection
+    {
+        return $this->discountRules;
+    }
+
+    public function addDiscountRule(DiscountRules $discountRule): self
+    {
+        if (!$this->discountRules->contains($discountRule)) {
+            $this->discountRules[] = $discountRule;
+            $discountRule->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiscountRule(DiscountRules $discountRule): self
+    {
+        if ($this->discountRules->contains($discountRule)) {
+            $this->discountRules->removeElement($discountRule);
+            $discountRule->removeProduct($this);
+        }
 
         return $this;
     }

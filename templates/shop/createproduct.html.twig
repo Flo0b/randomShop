@@ -2,37 +2,27 @@
 
 {% block body %}
 	<div class="container margin-container">
-		<h1>Add a product</h1>
+		<h1>
+			{% if editMode %}
+				Product update
+			{% else %}
+				Product creation
+			{% endif %}
+		</h1>
 		{{form_start(formProduct)}}
-
-		<div class="form-group">
-			<label for="name">Name</label>
-			{{ form_widget(formProduct.name)}}
-		</div>
-		<div class="form-group">
-			<label for="description">Description</label>
-			{{ form_widget(formProduct.description)}}
-		</div>
-
-		<div class="form-group">
-			<label for="image">Image</label>
-			{{ form_widget(formProduct.image)}}
-		</div>
-
-		<div class="form-group">
-			<label for="price">Price</label>
-			{{ form_widget(formProduct.price)}}
-		</div>
-
-		<div class="form-group">
-			<label for="discountedPrice">Discounted price</label>
-			{{ form_widget(formProduct.discountedPrice)}}
-		</div>
-
-		<div class="form-group">
-			<label for="type">Type</label>
-			{{ form_widget(formProduct.type)}}
-		</div>
+		{{form_row(formProduct.name,{'attr' : {'placeholder' : "Product name"}})}}
+		{{form_row(formProduct.description,{'attr' : {'placeholder' : "Product description"}})}}
+		{{form_row(formProduct.image,{'attr' : {'placeholder' : "Product image url"}})}}
+		{{form_row(formProduct.price,{'attr' : {'placeholder' : "Product price"}})}}
+		{{form_row(formProduct.discountedPrice,{'attr' : {'placeholder' : "Product discounted price"}})}}
+		{{form_row(formProduct.type,{'attr' : {'placeholder' : "Product type"}})}}
+		<button type="submit" class="btn btn-success">
+			{% if editMode %}
+				Save
+			{% else %}
+				Add to shop
+			{% endif %}
+		</button>
 		{{form_end(formProduct)}}
 
 

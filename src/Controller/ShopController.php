@@ -3,13 +3,14 @@ namespace App\Controller;
 
 use App\Entity\Products;
 use App\Repository\ProductsRepository;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Form\ProductType;
 
 class ShopController extends AbstractController
 {
@@ -38,56 +39,43 @@ class ShopController extends AbstractController
     }
 
     /**
-     * @Route("/shop/new", name="shop_create_product")
+     * @Route("/shop/new", name="create_product")
+     * @Route("/shop/{id}/edit", name="edit_product")
      */
-    public function createProduct(Request $request)
+    public function productForm(Products $product = null, Request $request, EntityManagerInterface $manager)
     {
         dump($request);
+        if(!$product)
+        {
+            $product = new Products();
+        }
 
-        $product = new Products();
+        // $form = $this->createFormBuilder($product)
+        //     ->add('name')
+        //     ->add('image')
+        //     ->add('price')
+        //     ->add('discountedPrice')
+        //     ->add('description')
+        //     ->add('type')
+        //     ->getForm();
 
-        $form = $this->createFormBuilder($product)
-            ->add('name', TextType::class, [
-                'attr' => [
-                    'placeholder' => "Product name",
-                    'class' => "form-control"
-                ]
-            ])
-            ->add('image', TextType::class, [
-                'attr' => [
-                    'placeholder' => "Image url",
-                    'class' => "form-control"
-                ]
-            ])
-            ->add('price', TextType::class, [
-                'attr' => [
-                    'placeholder' => "Product price",
-                    'class' => "form-control"
-                ]
-            ])
-            ->add('discountedPrice', TextType::class, [
-                'attr' => [
-                    'placeholder' => "Product discounted price",
-                    'class' => "form-control"
-                ]
-            ])
-            ->add('description', TextareaType::class, [
-                'attr' => [
-                    'placeholder' => "Product description",
-                    'class' => "form-control"
-                ]
-            ])
-            ->add('type', TextType::class, [
-                'attr' => [
-                    'placeholder' => "Product type",
-                    'class' => "form-control"
-                ]
-            ])
-            ->getForm();
+        $form = $this->createForm(ProductType::class, $product);
+
+        $form->handleRequest($request);
+        dump($product);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $manager->persist($product);
+            $manager->flush();
+
+            return $this->redirectToRoute('shop_show',['id' => $product->getId()]);
+        }
 
         return $this->render('shop/createproduct.html.twig', [
             'controller_name' => 'ShopController',
-            'formProduct' => $form->createView()
+            'formProduct' => $form->createView(),
+            'editMode' => $product->getId() !== null
         ]);
     }
 

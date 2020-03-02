@@ -8,12 +8,12 @@
 		<div class="img-wrap"><img class="img-fluid" src={{product.image}}></div>
 		<figcaption class="info-wrap">
 				<a href="{{path('shop_show', {'id':product.id})}}"><h4 class="title">{{product.name}}</h4></a>
-				<p class="desc">Some small description goes here</p>
+				<p class="desc">{{product.description}}</p>
 		</figcaption>
 		<div class="bottom-wrap">	
             <a href="{{path('shop_show', {'id':product.id})}}" class="btn btn-sm btn-primary float-right">Details</a>		
 			<div class="price-wrap h5">
-				<span class="price-new">${{product.price}}</span> <del class="price-old">${{product.discountedPrice}}</del>
+				<span class="price-new">${{product.discountedPrice}}</span> <del class="price-old">${{product.price}}</del>
 			</div> <!-- price-wrap.// -->
 		</div> <!-- bottom-wrap.// -->
 	</figure>
