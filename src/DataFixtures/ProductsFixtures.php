@@ -4,26 +4,27 @@ namespace App\DataFixtures;
 
 use App\Entity\DiscountRules;
 use App\Entity\Products;
+use App\Entity\Category;
+use App\DataFixtures\CategoryFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class ProductsFixtures extends Fixture
+class ProductsFixtures extends Fixture 
 {
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
+
         $faker = \Faker\Factory::create();
-        //Créer 3 réducs fakées
-        for ($j = 1; $j < 4; $j++) {
-            $cond = $faker->numberBetween(1, 1000);
 
-            $discount = new DiscountRules();
-            $discount->setDiscountPercent($faker->numberBetween(5, 50))->setRuleExpression("product.price >= $cond");
+        $tab = ['Books','Alimentaire','Hi-Tech','Clothes','Cars','Others'];
+        $categs = array();
 
-            $manager->persist($discount);
+        foreach ($tab as &$str) {
+            $categ = new Category();
+            $categ->setTitle($str);
+            $manager->persist($categ);
+            array_push($categs, $categ);
         }
-
 
         //Créer 9 produits fakées
         for ($i = 1; $i < 10; $i++) {
@@ -34,16 +35,15 @@ class ProductsFixtures extends Fixture
                 ->setImage("https://source.unsplash.com/random/400x300/?product?r=$i")
                 ->setDescription($faker->paragraph());
             $product->setDiscountedPrice(mt_rand(0, $product->getPrice()));
-            // $discounts = $manager->getRepository(DiscountRules::class);
-            // foreach($discounts as $d)
-            // {
-            //     if ($product->getPrice() >= $cond) {
-            //         $product->addDiscountRule($discount);
-            //     }
-            // }
+            $product->setCategory($categs[random_int(0,5)]);
 
             $manager->persist($product);
         }
+
+
+
         $manager->flush();
     }
+
+
 }

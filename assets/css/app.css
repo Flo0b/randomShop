@@ -356,3 +356,8 @@ body {
 .margin-container {
   margin-top: 15vh;
 }
+
+
+.min-height{
+  height:120px;
+}

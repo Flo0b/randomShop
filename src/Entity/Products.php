@@ -59,14 +59,10 @@ class Products
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\DiscountRules", mappedBy="products")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
      */
-    private $discountRules;
+    private $category;
 
-    public function __construct()
-    {
-        $this->discountRules = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -145,31 +141,16 @@ class Products
         return $this;
     }
 
-    /**
-     * @return Collection|DiscountRules[]
-     */
-    public function getDiscountRules(): Collection
+    public function getCategory(): ?Category
     {
-        return $this->discountRules;
+        return $this->category;
     }
 
-    public function addDiscountRule(DiscountRules $discountRule): self
+    public function setCategory(?Category $category): self
     {
-        if (!$this->discountRules->contains($discountRule)) {
-            $this->discountRules[] = $discountRule;
-            $discountRule->addProduct($this);
-        }
+        $this->category = $category;
 
         return $this;
     }
 
-    public function removeDiscountRule(DiscountRules $discountRule): self
-    {
-        if ($this->discountRules->contains($discountRule)) {
-            $this->discountRules->removeElement($discountRule);
-            $discountRule->removeProduct($this);
-        }
-
-        return $this;
-    }
 }
